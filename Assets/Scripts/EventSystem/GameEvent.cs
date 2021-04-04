@@ -22,7 +22,7 @@ namespace EventSystem
         {
             foreach (var eventListener in m_EventListeners)
             {
-                eventListener.OnEventRaised();
+                eventListener.OnEventRaised(this);
             }
         }
     }
