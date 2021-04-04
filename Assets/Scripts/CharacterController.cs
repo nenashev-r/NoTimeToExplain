@@ -19,7 +19,7 @@ namespace GameScripts
         // References
         [SerializeField][Space] private Rigidbody2D m_RigidBody;
         
-        // Movement
+        // Movement params
         [SerializeField] [Space] private float m_JumpForce;
         [SerializeField] private float m_MoveForce;
         [SerializeField] private float m_MaxSpeed;
