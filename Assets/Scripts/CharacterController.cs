@@ -1,10 +1,15 @@
 using EventSystem;
+using GameScripts.GlobalVariables;
 using UnityEngine;
 
 namespace GameScripts
 {
     public class CharacterController : MonoBehaviour
     {
+        // Global variables
+        [SerializeField] private GlobalFloat m_HitPoints;
+        
+        // Game events
         [SerializeField] private GameEvent m_DiedEvent;
         [SerializeField] private GameEvent m_SpawnedEvent;
 

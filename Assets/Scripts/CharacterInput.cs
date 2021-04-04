@@ -1,5 +1,4 @@
-﻿using System;
-using EventSystem;
+﻿using EventSystem;
 using UnityEngine;
 
 namespace GameScripts
@@ -17,12 +16,12 @@ namespace GameScripts
             {
                 m_JumpEvent.Invoke();
             }
-            
+
             if (Input.GetKey(KeyCode.A))
             {
                 m_MoveLeftEvent.Invoke();
             }
-            
+
             if (Input.GetKey(KeyCode.D))
             {
                 m_MoveRightEvent.Invoke();

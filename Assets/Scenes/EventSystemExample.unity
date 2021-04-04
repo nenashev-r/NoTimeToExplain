@@ -377,6 +377,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96ed0f7c5306b684e95a544bf8bfd056, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_HitPoints: {fileID: 11400000, guid: 9bfd9ad18c22f01428e35998458618d8, type: 2}
   m_DiedEvent: {fileID: 11400000, guid: 0071895b082683d4a83e7dd5c3786a9a, type: 2}
   m_SpawnedEvent: {fileID: 11400000, guid: 11cb12bc9a81ed3468c2c9724536369f, type: 2}
 --- !u!4 &1435188557
