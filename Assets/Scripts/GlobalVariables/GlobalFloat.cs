@@ -7,9 +7,9 @@ namespace GameScripts.GlobalVariables
     public class GlobalFloat : ScriptableObject, ISerializationCallbackReceiver
     {
         [NonSerialized][HideInInspector]
-        public float RuntimeValue;
+        public float value;
         
-        public float InitValue;
+        [SerializeField] private float InitValue;
 
         public void OnBeforeSerialize()
         {
@@ -17,7 +17,7 @@ namespace GameScripts.GlobalVariables
 
         public void OnAfterDeserialize()
         {
-            RuntimeValue = InitValue;
+            value = InitValue;
         }
     }
 }
