@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BehaviorController : MonoBehaviour
+namespace GameScripts
 {
-    // Start is called before the first frame update
-    void Start()
+    public class BehaviorController : MonoBehaviour
     {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
+        public void Run()
+        {
         
+        }
+    
+    
     }
 }
+
