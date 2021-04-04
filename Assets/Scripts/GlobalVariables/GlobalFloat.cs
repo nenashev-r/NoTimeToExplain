@@ -1,10 +1,23 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace GameScripts.GlobalVariables
 {
     [CreateAssetMenu( menuName = "GlobalVariables/Float")]
-    public class GlobalFloat : ScriptableObject
+    public class GlobalFloat : ScriptableObject, ISerializationCallbackReceiver
     {
-        public float Value;
+        [NonSerialized][HideInInspector]
+        public float RuntimeValue;
+        
+        public float InitValue;
+
+        public void OnBeforeSerialize()
+        {
+        }
+
+        public void OnAfterDeserialize()
+        {
+            RuntimeValue = InitValue;
+        }
     }
 }
