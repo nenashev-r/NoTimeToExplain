@@ -10,7 +10,7 @@ namespace GameScripts
 
         private void OnCollisionEnter2D(Collision2D other)
         {
-            IDamageable damageable = other.transform.root.GetComponent<IDamageable>();
+            IDamageable damageable = other.transform.GetComponent<IDamageable>();
             if (damageable == null)
             {
                 return;
