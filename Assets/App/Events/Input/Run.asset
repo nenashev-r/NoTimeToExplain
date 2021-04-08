@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c12ffab7710f469419369a2298b0976a, type: 3}
   m_Name: Run
   m_EditorClassIdentifier: 
+  m_Distance: 2
   m_EventListeners: []

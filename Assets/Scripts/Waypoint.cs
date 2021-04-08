@@ -5,54 +5,37 @@ using UnityEngine.EventSystems;
 
 namespace GameScripts
 {
-    public class Waypoint : MonoBehaviour, IPointerClickHandler
+    public class Waypoint : Clickable, IPointerClickHandler
     {
         [SerializeField] private WaypointEventsPanel m_EventsPanel;
+        [Tooltip("negative value means infinity")]
         [SerializeField] private int m_MaxEvents = -1;
+        [SerializeField] private Clickable m_ClearBtn;
 
         private Queue<GameEvent> m_Events;
 
-        private bool m_IsActive;
-
-        public static Waypoint ActiveWaypoint { get; private set; }
-
-        private void Update()
+        private void Start()
         {
-            if (!m_IsActive)
-                return;
+            m_ClearBtn.gameObject.SetActive(false);
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (ActiveWaypoint != null)
-                ActiveWaypoint.ClearEvents();
-
-            ActiveWaypoint = this;
-
-            m_IsActive = true;
-
-            TakeAnotherAction().Invoke();
-        }
-
-        private GameEvent TakeAnotherAction()
-        {
-            if (m_Events != null && m_Events.Count > 0)
-                return m_Events.Dequeue();
-
-            return null;
+            collision.GetComponent<BehaviorController>()?.SetEventsQueue(m_Events);
         }
 
         private void ClearEvents()
         {
             m_Events.Clear();
-            m_IsActive = false;
+            m_EventsPanel?.ShowEvents(null);
+
+            m_ClearBtn.gameObject.SetActive(false);
+            m_ClearBtn.OnClick.RemoveListener(ClearEvents);
         }
 
-        public void OnPointerClick(PointerEventData eventData)
+        public override void OnPointerClick(PointerEventData eventData)
         {
             ActionsPanel.Instance?.Switch(this);
-
-            m_EventsPanel?.Switch();
         }
 
         public void AddEvents(GameEvent ev)
@@ -64,6 +47,12 @@ namespace GameScripts
                 return;
 
             m_Events.Enqueue(ev);
+
+            if(!m_ClearBtn.gameObject.activeSelf)
+            {
+                m_ClearBtn.gameObject.SetActive(true);
+                m_ClearBtn.OnClick.AddListener(ClearEvents);
+            }
 
             m_EventsPanel?.ShowEvents(m_Events.ToArray());
         }

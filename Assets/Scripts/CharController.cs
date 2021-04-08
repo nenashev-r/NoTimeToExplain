@@ -62,18 +62,21 @@ namespace GameScripts
 
         public void Jump(float modificate = 1)
         {
+            m_Modificater = modificate;
             if (m_IsGrounded)
-                m_RigidBody.AddForce(Vector3.up * m_JumpForce * modificate);
+                m_RigidBody.AddForce(Vector3.up * m_JumpForce * m_Modificater);
         }
 
         public void Walk(float modificate = 1)
         {
-            m_CurVelocity = new Vector2(m_MoveForce * modificate, m_RigidBody.velocity.y);
+            m_Modificater = modificate;
+            m_CurVelocity = new Vector2(m_MoveForce * m_Modificater, m_RigidBody.velocity.y);
         }
 
         public void Run(float modificate = 1)
         {
-            m_CurVelocity = new Vector2(m_MoveForce * modificate * m_RunMultiplier, m_RigidBody.velocity.y);
+            m_Modificater = modificate;
+            m_CurVelocity = new Vector2(m_MoveForce * m_Modificater * m_RunMultiplier, m_RigidBody.velocity.y);
         }
 
         public void Stop()
