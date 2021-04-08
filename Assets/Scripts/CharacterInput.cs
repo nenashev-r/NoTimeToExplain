@@ -10,11 +10,6 @@ namespace GameScripts
     {
         public GameEvent Event;
         public Button Button;
-
-        public void EventRun()
-        {
-            Event.Invoke();
-        }
     }
 
     public class CharacterInput : MonoBehaviour
@@ -23,12 +18,12 @@ namespace GameScripts
 
         private void OnEnable()
         {
-            m_Events.ForEach(e => e.Button.onClick.AddListener(e.EventRun));
+            m_Events.ForEach(e => e.Button.onClick.AddListener(e.Event.Invoke));
         }
         
         private void OnDisable()
         {
-            m_Events.ForEach(e => e.Button.onClick.RemoveListener(e.EventRun));
+            m_Events.ForEach(e => e.Button.onClick.RemoveListener(e.Event.Invoke));
         }
     }
 }
