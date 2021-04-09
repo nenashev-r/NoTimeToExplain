@@ -12,6 +12,7 @@ namespace GameScripts
 
         public virtual void OnPointerClick(PointerEventData eventData)
         {
+            Debug.Log("click");
             m_OnClick?.Invoke();
         }
     }

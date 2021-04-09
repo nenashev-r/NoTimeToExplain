@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 namespace GameScripts
 {
-    public class Waypoint : Clickable, IPointerClickHandler
+    public class Waypoint : MonoBehaviour
     {
         [SerializeField] private WaypointEventsPanel m_EventsPanel;
         [Tooltip("negative value means infinity")]
@@ -31,11 +31,6 @@ namespace GameScripts
 
             m_ClearBtn.gameObject.SetActive(false);
             m_ClearBtn.OnClick.RemoveListener(ClearEvents);
-        }
-
-        public override void OnPointerClick(PointerEventData eventData)
-        {
-            ActionsPanel.Instance?.Switch(this);
         }
 
         public void AddEvents(GameEvent ev)
