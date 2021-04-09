@@ -14,6 +14,8 @@ namespace GameScripts
 
         private Queue<GameEvent> m_Events;
 
+        public bool IsActive { get; private set; }
+
         private void Start()
         {
             m_ClearBtn.gameObject.SetActive(false);
@@ -22,6 +24,11 @@ namespace GameScripts
         private void OnTriggerEnter2D(Collider2D collision)
         {
             collision.GetComponent<BehaviorController>()?.SetEventsQueue(m_Events);
+
+            IsActive = true;
+
+            if (ActionsPanel.Instance != null && ActionsPanel.Instance.gameObject.activeSelf)
+                ActionsPanel.Instance.Switch(this);
         }
 
         private void ClearEvents()

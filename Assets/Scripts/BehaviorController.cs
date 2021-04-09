@@ -1,6 +1,5 @@
 using EventSystem;
 using GameScripts.Interaction;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,7 +18,7 @@ namespace GameScripts
         private Queue<GameEvent> m_Events;
         private GameEvent m_CurEvent;
 
-        private float m_LastPosX;
+        private Vector3 m_LastPos;
 
         private void Start()
         {
@@ -34,7 +33,7 @@ namespace GameScripts
             if (m_Events == null || m_Events.Count == 0)
                 return;
 
-            if (m_CurEvent == null || m_Transform.position.x - m_LastPosX >= m_CurEvent.Distance)
+            if (m_CurEvent == null || m_Transform.position.x - m_LastPos.x >= m_CurEvent.Distance)
                 ActivateNextEvent();
         }
 
@@ -48,7 +47,7 @@ namespace GameScripts
 
         private void ActivateNextEvent()
         {
-            m_LastPosX = m_Transform.position.x;
+            m_LastPos = m_Transform.position;
 
             m_CurEvent = TakeAnotherAction();
 
@@ -78,7 +77,7 @@ namespace GameScripts
             if (m_CharacterController == null)
                 return;
 
-            m_CharacterController.Run(m_SpeedModificater);
+            m_CharacterController.Run();
         }
 
         public void Walk()
@@ -86,8 +85,25 @@ namespace GameScripts
             if (m_CharacterController == null)
                 return;
 
-            m_CharacterController.Walk(m_SpeedModificater);
+            m_CharacterController.Walk();
         }
+
+        public void Climb()
+        {
+            if (m_CharacterController == null)
+                return;
+
+            m_CharacterController.Climb(m_LastPos.y + m_CurEvent.Distance);
+        }
+
+        public void TurnAround()
+        {
+            if (m_CharacterController == null)
+                return;
+
+            m_CharacterController.TurnAround();
+        }
+
         public void Stop()
         {
             if (m_CharacterController == null)

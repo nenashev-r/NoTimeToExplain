@@ -23,15 +23,18 @@ namespace GameScripts
 
         // Movement params
         [Space]
-        [SerializeField] private float m_JumpForce;
-        [SerializeField] private float m_MoveForce;
+        [SerializeField] private Vector2 m_JumpForce;
+        [SerializeField] private float m_MoveSpeed;
         [SerializeField] private float m_RunMultiplier;
+        [SerializeField] private float m_ClimbSpeed;
 
+        private Transform m_Transform;
         private Vector2 m_CurVelocity;
 
-        private bool m_IsGrounded;
+        private bool m_IsGrounded = true;
         private string m_GroundLayer = "Ground";
-        private float m_RayDistance = .5f;
+        private float m_DownRayDistance = .5f;
+        private float m_SideRayDistance = .2f;
 
         private float m_Modificater = 1;
         public float Modificater
@@ -42,17 +45,32 @@ namespace GameScripts
             }
         }
 
+        private int m_Side = 1;
+
+        private bool m_StartClimb;
+        private bool m_Climbing;
+        private float m_ClimbHeight;
+
+        private void Start()
+        {
+            m_Transform = transform;
+        }
+
         private void Update()
         {
             GroundCheck();
 
-            if (m_IsGrounded)
+            if (m_StartClimb || m_Climbing)
+            {
+                Climbing();
+            }
+            else if (m_IsGrounded)
                 m_RigidBody.velocity = m_CurVelocity * m_Modificater;
         }
 
         private void GroundCheck()
         {
-            var hit = Physics2D.Raycast(transform.position, Vector2.down, m_RayDistance, 1 << LayerMask.NameToLayer(m_GroundLayer));
+            var hit = Physics2D.Raycast(m_Transform.position, Vector2.down, m_DownRayDistance, 1 << LayerMask.NameToLayer(m_GroundLayer));
             
             if (hit.collider != null)
                 m_IsGrounded = true;
@@ -60,23 +78,67 @@ namespace GameScripts
                 m_IsGrounded = false;
         }
 
-        public void Jump(float modificate = 1)
+        private void Climbing()
         {
-            m_Modificater = modificate;
+            if(m_StartClimb)
+            {
+                var hit = Physics2D.Raycast(m_Transform.position, Vector2.right*m_Side, m_SideRayDistance, 1 << LayerMask.NameToLayer(m_GroundLayer));
+                
+                if (hit.collider != null)
+                {
+                    m_StartClimb = false;
+                    m_Climbing = true;
+
+                    m_RigidBody.isKinematic = true;
+                    m_RigidBody.velocity = Vector2.zero;
+                }
+                else
+                    m_RigidBody.velocity = m_CurVelocity * m_Modificater;
+            }            
+            
+            if(m_Climbing)
+            {
+                if (m_Transform.position.y < m_ClimbHeight)
+                    m_Transform.position += Vector3.up * Time.deltaTime * m_ClimbSpeed * m_Modificater;
+                else
+                {
+                    m_Climbing = false;
+
+                    m_RigidBody.isKinematic = false;
+                    m_RigidBody.AddForce(Vector2.right * m_Side * m_Modificater*1000);
+                    Walk();
+                }
+            }
+
+        }
+
+        public void Climb(float height)
+        {
+            m_StartClimb = true;
+            m_ClimbHeight = height;
+        }
+
+        public void TurnAround()
+        {
+            m_Side *= -1;
+
+            m_CurVelocity.x *= m_Side;
+        }
+
+        public void Jump()
+        {
             if (m_IsGrounded)
-                m_RigidBody.AddForce(Vector3.up * m_JumpForce * m_Modificater);
+                m_RigidBody.AddForce(new Vector2(m_JumpForce.x * m_Side, m_JumpForce.y));
         }
 
-        public void Walk(float modificate = 1)
+        public void Walk()
         {
-            m_Modificater = modificate;
-            m_CurVelocity = new Vector2(m_MoveForce * m_Modificater, m_RigidBody.velocity.y);
+            m_CurVelocity = new Vector2(m_MoveSpeed * m_Side, m_RigidBody.velocity.y);
         }
 
-        public void Run(float modificate = 1)
+        public void Run()
         {
-            m_Modificater = modificate;
-            m_CurVelocity = new Vector2(m_MoveForce * m_Modificater * m_RunMultiplier, m_RigidBody.velocity.y);
+            m_CurVelocity = new Vector2(m_MoveSpeed * m_RunMultiplier * m_Side, m_RigidBody.velocity.y);
         }
 
         public void Stop()
