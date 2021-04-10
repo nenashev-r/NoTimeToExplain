@@ -135,10 +135,10 @@ MonoBehaviour:
   m_SpawnedEvent: {fileID: 11400000, guid: 11cb12bc9a81ed3468c2c9724536369f, type: 2}
   m_HitObstacle: {fileID: 11400000, guid: 648d9f575c353de42ada2b08db089db6, type: 2}
   m_RigidBody: {fileID: 2450250220482770867}
-  m_JumpForce: {x: 0, y: 0}
-  m_MoveSpeed: 0
-  m_RunMultiplier: 1.5
-  m_ClimbSpeed: 0
+  m_JumpForce: {x: 350, y: 1000}
+  m_MoveSpeed: 1
+  m_RunMultiplier: 3
+  m_ClimbSpeed: 1
 --- !u!114 &2450250220482770866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -252,6 +252,38 @@ MonoBehaviour:
         - m_Target: {fileID: 2450250220482770866}
           m_TargetAssemblyTypeName: GameScripts.BehaviorController, Assembly-CSharp
           m_MethodName: TurnAround
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - m_Event: {fileID: 11400000, guid: 82b879377985d1340b432efe5ecc9030, type: 2}
+    Response:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2450250220482770866}
+          m_TargetAssemblyTypeName: GameScripts.BehaviorController, Assembly-CSharp
+          m_MethodName: StartLevel
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - m_Event: {fileID: 11400000, guid: d9666dc59a84ccc45aff33c5a3322f2d, type: 2}
+    Response:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2450250220482770866}
+          m_TargetAssemblyTypeName: GameScripts.BehaviorController, Assembly-CSharp
+          m_MethodName: Finish
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}

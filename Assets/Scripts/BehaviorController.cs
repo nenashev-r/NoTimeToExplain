@@ -24,8 +24,6 @@ namespace GameScripts
         {
             m_Transform = transform;
             m_CharacterController = GetComponent<CharController>();
-
-            m_DefaultEvent?.Invoke();
         }
 
         private void Update()
@@ -62,6 +60,16 @@ namespace GameScripts
             m_Events = events;
 
             ActivateNextEvent();
+        }
+
+        public void StartLevel()
+        {
+            m_DefaultEvent?.Invoke();
+        }
+
+        public void Finish()
+        {
+            Stop();
         }
 
         public void Jump()

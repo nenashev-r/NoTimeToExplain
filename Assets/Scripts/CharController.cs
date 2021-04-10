@@ -33,8 +33,8 @@ namespace GameScripts
 
         private bool m_IsGrounded = true;
         private string m_GroundLayer = "Ground";
-        private float m_DownRayDistance = .5f;
-        private float m_SideRayDistance = .2f;
+        private float m_DownRayDistance = .45f;
+        private float m_SideRayDistance = .27f;
 
         private float m_Modificater = 1;
         public float Modificater
@@ -54,6 +54,7 @@ namespace GameScripts
         private void Start()
         {
             m_Transform = transform;
+            Stop();
         }
 
         private void Update()
