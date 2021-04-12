@@ -33,6 +33,8 @@ namespace GameScripts
         [SerializeField] private LayerRayChecker m_WallRightChecker;
         [SerializeField] private LayerRayChecker m_WallLeftChecker;
 
+        [Space]
+        [SerializeField] private Transform m_StartPosition;
 
         private Transform m_Transform;
         private Vector2 m_CurVelocity;
@@ -60,6 +62,10 @@ namespace GameScripts
         private void Start()
         {
             m_Transform = transform;
+
+            if (m_StartPosition != null)
+                m_Transform.position = m_StartPosition.position;
+
             Stop();
         }
 
