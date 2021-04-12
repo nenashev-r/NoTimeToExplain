@@ -34,7 +34,7 @@ namespace GameScripts
         private bool m_IsGrounded = true;
         private string m_GroundLayer = "Ground";
         private float m_DownRayDistance = .45f;
-        private float m_SideRayDistance = .27f;
+        private float m_SideRayDistance = .29f;
 
         private float m_Modificater = 1;
         public float Modificater
@@ -84,7 +84,7 @@ namespace GameScripts
             if(m_StartClimb)
             {
                 var hit = Physics2D.Raycast(m_Transform.position, Vector2.right*m_Side, m_SideRayDistance, 1 << LayerMask.NameToLayer(m_GroundLayer));
-                
+
                 if (hit.collider != null)
                 {
                     m_StartClimb = false;

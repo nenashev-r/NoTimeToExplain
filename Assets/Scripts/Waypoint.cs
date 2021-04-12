@@ -28,7 +28,7 @@ namespace GameScripts
             IsActive = true;
 
             if (ActionsPanel.Instance != null && ActionsPanel.Instance.gameObject.activeSelf)
-                ActionsPanel.Instance.Switch(this);
+                ActionsPanel.Instance.SwitchOff(this);
         }
 
         private void ClearEvents()

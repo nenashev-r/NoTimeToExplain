@@ -41,14 +41,31 @@ namespace GameScripts
             }
         }
 
-        public void Switch(Waypoint swithcBy)
+        public void Switch(Waypoint switchBy)
         {
-            gameObject.SetActive(!gameObject.activeSelf);
-
-            if (gameObject.activeSelf)
-                CurWaypoint = swithcBy;
+            if (gameObject.activeSelf && CurWaypoint != switchBy)
+            {
+                CurWaypoint.GetComponentInChildren<Switcher>()?.Switch();
+                CurWaypoint = switchBy;
+            }
             else
+            {
+                gameObject.SetActive(!gameObject.activeSelf);
+
+                if (gameObject.activeSelf)
+                    CurWaypoint = switchBy;
+                else
+                    CurWaypoint = null;
+            }
+        }
+
+        public void SwitchOff(Waypoint switchBy)
+        {
+            if(CurWaypoint == switchBy)
+            {
+                gameObject.SetActive(false);
                 CurWaypoint = null;
+            }
         }
     }
 }

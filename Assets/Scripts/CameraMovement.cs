@@ -5,13 +5,10 @@ namespace GameScripts
 {
     public class CameraMovement : MonoBehaviour
     {
+        [SerializeField] private float m_MoveSpeed;
         [SerializeField] private List<Waypoint> m_Waypoints;
 
-        private Vector3 m_Offset;
-        void Start()
-        {
-            m_Offset = m_Waypoints[0].transform.position - transform.position;
-        }
+        private bool m_AtPlace = true;
 
         private void Update()
         {
@@ -24,9 +21,17 @@ namespace GameScripts
 
                 if (m_Waypoints.Count == 0)
                     return;
+
+                m_AtPlace = false;
             }
 
-            transform.position = m_Waypoints[0].transform.position - m_Offset;
+            if (!m_AtPlace)
+            {
+                transform.position += Vector3.right * m_MoveSpeed * Time.deltaTime;
+
+                if (transform.position.x - m_Waypoints[0].transform.position.x > 0)
+                    m_AtPlace = true;
+            }
         }
     }
 }
