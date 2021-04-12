@@ -4415,7 +4415,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2450250220482770862, guid: c0c42533d2c66f0489cd80a820b5d8a3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.43
+      value: 0.42
       objectReference: {fileID: 0}
     - target: {fileID: 2450250220482770862, guid: c0c42533d2c66f0489cd80a820b5d8a3, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4460,14 +4460,6 @@ PrefabInstance:
     - target: {fileID: 2450250220482770863, guid: c0c42533d2c66f0489cd80a820b5d8a3, type: 3}
       propertyPath: m_JumpHeight
       value: 500
-      objectReference: {fileID: 0}
-    - target: {fileID: 2450250220482770863, guid: c0c42533d2c66f0489cd80a820b5d8a3, type: 3}
-      propertyPath: m_JumpForce.x
-      value: 550
-      objectReference: {fileID: 0}
-    - target: {fileID: 2450250220482770863, guid: c0c42533d2c66f0489cd80a820b5d8a3, type: 3}
-      propertyPath: m_JumpForce.y
-      value: 2100
       objectReference: {fileID: 0}
     - target: {fileID: 2450250220482770866, guid: c0c42533d2c66f0489cd80a820b5d8a3, type: 3}
       propertyPath: m_DefaultEvent

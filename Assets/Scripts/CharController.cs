@@ -1,7 +1,7 @@
-using System;
+using System.Linq;
+using System.Collections.Generic;
 using EventSystem;
 using GameScripts.GlobalVariables;
-using GameScripts.Interaction;
 using UnityEngine;
 
 namespace GameScripts
@@ -28,13 +28,16 @@ namespace GameScripts
         [SerializeField] private float m_RunMultiplier;
         [SerializeField] private float m_ClimbSpeed;
 
+        [Space]
+        [SerializeField] private List<LayerRayChecker> m_GroundCheckers;
+        [SerializeField] private LayerRayChecker m_WallRightChecker;
+        [SerializeField] private LayerRayChecker m_WallLeftChecker;
+
+
         private Transform m_Transform;
         private Vector2 m_CurVelocity;
 
-        private bool m_IsGrounded = true;
-        private string m_GroundLayer = "Ground";
-        private float m_DownRayDistance = .45f;
-        private float m_SideRayDistance = .29f;
+        private bool m_IsGrounded => m_GroundCheckers != null && m_GroundCheckers.Count > 0 && m_GroundCheckers.Any(o => o.IsLayer);
 
         private float m_Modificater = 1;
         public float Modificater
@@ -49,7 +52,10 @@ namespace GameScripts
 
         private bool m_StartClimb;
         private bool m_Climbing;
+        private bool m_AfterClimb;
         private float m_ClimbHeight;
+
+        private bool m_AfterJump;
 
         private void Start()
         {
@@ -59,33 +65,23 @@ namespace GameScripts
 
         private void Update()
         {
-            GroundCheck();
-
-            if (m_StartClimb || m_Climbing)
+            if (m_StillClimb)
             {
                 Climbing();
             }
             else if (m_IsGrounded)
                 m_RigidBody.velocity = m_CurVelocity * m_Modificater;
+            else if (!m_AfterJump)
+                m_RigidBody.velocity = Vector2.down * m_MoveSpeed;
         }
 
-        private void GroundCheck()
-        {
-            var hit = Physics2D.Raycast(m_Transform.position, Vector2.down, m_DownRayDistance, 1 << LayerMask.NameToLayer(m_GroundLayer));
-            
-            if (hit.collider != null)
-                m_IsGrounded = true;
-            else
-                m_IsGrounded = false;
-        }
+        private bool m_StillClimb => m_StartClimb || m_Climbing || m_AfterClimb;
 
         private void Climbing()
         {
             if(m_StartClimb)
             {
-                var hit = Physics2D.Raycast(m_Transform.position, Vector2.right*m_Side, m_SideRayDistance, 1 << LayerMask.NameToLayer(m_GroundLayer));
-
-                if (hit.collider != null)
+                if (m_Side > 0 ? m_WallRightChecker.IsLayer : m_WallLeftChecker.IsLayer)
                 {
                     m_StartClimb = false;
                     m_Climbing = true;
@@ -104,42 +100,60 @@ namespace GameScripts
                 else
                 {
                     m_Climbing = false;
-
-                    m_RigidBody.isKinematic = false;
-                    m_RigidBody.AddForce(Vector2.right * m_Side * m_Modificater*1000);
-                    Walk();
+                    m_AfterClimb = true;
                 }
             }
 
+            if (m_AfterClimb)
+            {
+                if (!m_IsGrounded)
+                    m_Transform.position += Vector3.right * m_Side * Time.deltaTime * m_Modificater;
+                else
+                {
+                    m_AfterClimb = false;
+                    m_RigidBody.isKinematic = false;
+                    Walk();
+                }
+            }
         }
 
         public void Climb(float height)
         {
             m_StartClimb = true;
             m_ClimbHeight = height;
+
+            m_AfterJump = false;
         }
 
         public void TurnAround()
         {
             m_Side *= -1;
-
             m_CurVelocity.x *= m_Side;
+
+            m_AfterJump = false;
         }
 
         public void Jump()
         {
             if (m_IsGrounded)
+            { 
                 m_RigidBody.AddForce(new Vector2(m_JumpForce.x * m_Side, m_JumpForce.y));
+                m_AfterJump = true;
+            }
         }
 
         public void Walk()
         {
             m_CurVelocity = new Vector2(m_MoveSpeed * m_Side, m_RigidBody.velocity.y);
+
+            m_AfterJump = false;
         }
 
         public void Run()
         {
             m_CurVelocity = new Vector2(m_MoveSpeed * m_RunMultiplier * m_Side, m_RigidBody.velocity.y);
+
+            m_AfterJump = false;
         }
 
         public void Stop()
@@ -149,6 +163,8 @@ namespace GameScripts
 
         public void AddDamage(float damage)
         {
+            m_AfterJump = false;
+
             float hp = m_HitPoints.value;
             if (damage >= hp)
             {
