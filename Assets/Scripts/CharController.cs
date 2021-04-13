@@ -69,7 +69,7 @@ namespace GameScripts
             Stop();
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             if (m_StillClimb)
             {
@@ -134,7 +134,7 @@ namespace GameScripts
         public void TurnAround()
         {
             m_Side *= -1;
-            m_CurVelocity.x *= m_Side;
+            m_CurVelocity.x *= -1;
 
             m_AfterJump = false;
         }

@@ -19,6 +19,7 @@ namespace GameScripts
         private GameEvent m_CurEvent;
 
         private Vector3 m_LastPos;
+        private int m_Side = 1;
 
         private void Start()
         {
@@ -28,10 +29,10 @@ namespace GameScripts
 
         private void Update()
         {
-            if (m_Events == null || m_Events.Count == 0)
+            if ((m_Events == null || m_Events.Count == 0) && m_CurEvent == null)
                 return;
 
-            if (m_CurEvent == null || m_Transform.position.x - m_LastPos.x >= m_CurEvent.Distance)
+            if ((m_Transform.position.x - m_LastPos.x) * m_Side >= m_CurEvent.Distance)
                 ActivateNextEvent();
         }
 
@@ -110,6 +111,7 @@ namespace GameScripts
                 return;
 
             m_CharacterController.TurnAround();
+            m_Side *= -1;
         }
 
         public void Stop()
