@@ -11,7 +11,12 @@ public class ApplicationController : MonoBehaviour
 
     public void ReStartScene()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void LoadScene(int sceneId)
+    {
+        SceneManager.LoadScene(sceneId);
     }
 
     public void Quit()
