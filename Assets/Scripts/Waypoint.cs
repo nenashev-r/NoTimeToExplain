@@ -11,6 +11,7 @@ namespace GameScripts
         [Tooltip("negative value means infinity")]
         [SerializeField] private int m_MaxEvents = -1;
         [SerializeField] private Clickable m_ClearBtn;
+        [SerializeField] private Clickable m_IconBtn;
 
         private Queue<GameEvent> m_Events;
 
@@ -19,6 +20,7 @@ namespace GameScripts
         private void Start()
         {
             m_ClearBtn.gameObject.SetActive(false);
+            m_IconBtn.enabled = false;
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
@@ -26,6 +28,7 @@ namespace GameScripts
             collision.GetComponent<BehaviorController>()?.SetEventsQueue(m_Events);
 
             IsActive = true;
+            m_IconBtn.enabled = false;
 
             if (ActionsPanel.Instance != null && ActionsPanel.Instance.gameObject.activeSelf)
                 ActionsPanel.Instance.SwitchOff(this);
@@ -57,6 +60,15 @@ namespace GameScripts
             }
 
             m_EventsPanel?.ShowEvents(m_Events.ToArray());
+        }
+
+        public void StartLevel()
+        {
+            m_IconBtn.enabled = true;
+        }
+        public void FinishLevel()
+        {
+            m_IconBtn.enabled = false;
         }
     }
 }

@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Layer:
     serializedVersion: 2
     m_Bits: 64
-  m_RayDistance: 0.02
+  m_RayDistance: 0.03
   m_RayDirection: {x: 0, y: -1}
 --- !u!1 &1112961551001904997
 GameObject:
@@ -94,7 +94,7 @@ MonoBehaviour:
   m_Layer:
     serializedVersion: 2
     m_Bits: 64
-  m_RayDistance: 0.02
+  m_RayDistance: 0.03
   m_RayDirection: {x: 0, y: -1}
 --- !u!1 &2187893291804448512
 GameObject:
@@ -121,7 +121,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2187893291804448512}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.26, y: 0, z: 0}
+  m_LocalPosition: {x: 0.264, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2450250220482770862}
@@ -142,7 +142,7 @@ MonoBehaviour:
   m_Layer:
     serializedVersion: 2
     m_Bits: 64
-  m_RayDistance: 0.02
+  m_RayDistance: 0.03
   m_RayDirection: {x: 1, y: 0}
 --- !u!1 &2450250219379197024
 GameObject:
@@ -284,10 +284,11 @@ MonoBehaviour:
   m_SpawnedEvent: {fileID: 11400000, guid: 11cb12bc9a81ed3468c2c9724536369f, type: 2}
   m_HitObstacle: {fileID: 11400000, guid: 648d9f575c353de42ada2b08db089db6, type: 2}
   m_RigidBody: {fileID: 2450250220482770867}
-  m_JumpForce: {x: 550, y: 2100}
+  m_JumpForce: {x: 570, y: 2100}
   m_MoveSpeed: 1
   m_RunMultiplier: 3
   m_ClimbSpeed: 1
+  m_FallSpeed: 1.5
   m_GroundCheckers:
   - {fileID: 5602874473793045380}
   - {fileID: 6059703215620800465}
@@ -483,8 +484,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.019042283, y: 0.03341505}
-  m_Size: {x: 0.48587316, y: 0.92455703}
+  m_Offset: {x: 0.016728997, y: 0.039776593}
+  m_Size: {x: 0.49049973, y: 0.91183394}
   m_Direction: 0
 --- !u!1 &2450250220548365850
 GameObject:
@@ -563,7 +564,7 @@ MonoBehaviour:
   m_Layer:
     serializedVersion: 2
     m_Bits: 64
-  m_RayDistance: 0.02
+  m_RayDistance: 0.03
   m_RayDirection: {x: 0, y: -1}
 --- !u!1 &8689545987371731131
 GameObject:
@@ -611,5 +612,5 @@ MonoBehaviour:
   m_Layer:
     serializedVersion: 2
     m_Bits: 64
-  m_RayDistance: 0.02
+  m_RayDistance: 0.03
   m_RayDirection: {x: -1, y: 0}

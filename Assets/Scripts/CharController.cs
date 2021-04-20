@@ -22,11 +22,12 @@ namespace GameScripts
         [SerializeField] private Rigidbody2D m_RigidBody;
 
         // Movement params
-        [Space]
+        [Space]        
         [SerializeField] private Vector2 m_JumpForce;
         [SerializeField] private float m_MoveSpeed;
         [SerializeField] private float m_RunMultiplier;
         [SerializeField] private float m_ClimbSpeed;
+        [SerializeField] private float m_FallSpeed;
 
         [Space]
         [SerializeField] private List<LayerRayChecker> m_GroundCheckers;
@@ -78,7 +79,7 @@ namespace GameScripts
             else if (m_IsGrounded)
                 m_RigidBody.velocity = m_CurVelocity * m_Modificater;
             else if (!m_AfterJump)
-                m_RigidBody.velocity = Vector2.down * m_MoveSpeed;
+                m_RigidBody.velocity = new Vector2(m_RigidBody.velocity.x, m_RigidBody.velocity.y * m_FallSpeed);
         }
 
         private bool m_StillClimb => m_StartClimb || m_Climbing || m_AfterClimb;
@@ -86,11 +87,13 @@ namespace GameScripts
         private void Climbing()
         {
             if(m_StartClimb)
-            {
+            {                
                 if (m_Side > 0 ? m_WallRightChecker.IsLayer : m_WallLeftChecker.IsLayer)
                 {
                     m_StartClimb = false;
                     m_Climbing = true;
+                    m_AfterClimb = false;
+
 
                     m_RigidBody.isKinematic = true;
                     m_RigidBody.velocity = Vector2.zero;

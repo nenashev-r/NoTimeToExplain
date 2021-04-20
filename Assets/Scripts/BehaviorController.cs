@@ -70,6 +70,8 @@ namespace GameScripts
 
         public void Finish()
         {
+            m_Events.Clear();
+            m_CurEvent = null;
             Stop();
         }
 

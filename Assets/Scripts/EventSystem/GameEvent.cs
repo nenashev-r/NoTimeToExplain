@@ -24,6 +24,7 @@ namespace EventSystem
 
         public void Invoke()
         {
+            Debug.Log($"<color=green>{name}</color>");
             foreach (var eventListener in m_EventListeners)
             {
                 eventListener.OnEventRaised(this);
