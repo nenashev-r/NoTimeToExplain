@@ -31,8 +31,7 @@ namespace GameScripts
 
         [Space]
         [SerializeField] private List<LayerRayChecker> m_GroundCheckers;
-        [SerializeField] private LayerRayChecker m_WallRightChecker;
-        [SerializeField] private LayerRayChecker m_WallLeftChecker;
+        [SerializeField] private List<LayerRayChecker> m_WallCheckers;
 
         [Space]
         [SerializeField] private Transform m_StartPosition;
@@ -40,16 +39,11 @@ namespace GameScripts
         private Transform m_Transform;
         private Vector2 m_CurVelocity;
 
-        private bool m_IsGrounded => m_GroundCheckers != null && m_GroundCheckers.Count > 0 && m_GroundCheckers.Any(o => o.IsLayer);
-
-        private float m_Modificater = 1;
-        public float Modificater
-        {
-            set
-            {
-                m_Modificater = value;
-            }
-        }
+        private bool m_IsGrounded => m_GroundCheckers.Any(o => o.IsLayer);
+        [Header("check")]
+        [SerializeField] bool Grounded;
+        [SerializeField] bool Wall;
+        public float Modificater { get; set; } = 1;
 
         private int m_Side = 1;
 
@@ -72,12 +66,14 @@ namespace GameScripts
 
         private void FixedUpdate()
         {
+            Grounded = m_IsGrounded;
+            Wall = m_WallCheckers.Any(o => o.IsLayer);
             if (m_StillClimb)
             {
                 Climbing();
             }
             else if (m_IsGrounded)
-                m_RigidBody.velocity = m_CurVelocity * m_Modificater;
+                m_RigidBody.velocity = m_CurVelocity * Modificater;
             else if (!m_AfterJump)
                 m_RigidBody.velocity = new Vector2(m_RigidBody.velocity.x, m_RigidBody.velocity.y * m_FallSpeed);
         }
@@ -88,7 +84,7 @@ namespace GameScripts
         {
             if(m_StartClimb)
             {                
-                if (m_Side > 0 ? m_WallRightChecker.IsLayer : m_WallLeftChecker.IsLayer)
+                if (m_WallCheckers.Any(o => o.IsLayer))
                 {
                     m_StartClimb = false;
                     m_Climbing = true;
@@ -99,14 +95,14 @@ namespace GameScripts
                     m_RigidBody.velocity = Vector2.zero;
                 }
                 else
-                    m_RigidBody.velocity = m_CurVelocity * m_Modificater;
+                    m_RigidBody.velocity = m_CurVelocity * Modificater;
             }            
             
             if(m_Climbing)
             {
-                if (m_Transform.position.y < m_ClimbHeight)
-                    m_Transform.position += Vector3.up * Time.deltaTime * m_ClimbSpeed * m_Modificater;
-                else
+                m_Transform.position += Vector3.up * Time.deltaTime * m_ClimbSpeed * Modificater;
+
+                if (m_WallCheckers.All(o => !o.IsLayer))
                 {
                     m_Climbing = false;
                     m_AfterClimb = true;
@@ -116,21 +112,20 @@ namespace GameScripts
             if (m_AfterClimb)
             {
                 if (!m_IsGrounded)
-                    m_Transform.position += Vector3.right * m_Side * Time.deltaTime * m_Modificater;
+                    m_Transform.position += Vector3.right * m_Side * Time.deltaTime * Modificater;
                 else
                 {
                     m_AfterClimb = false;
                     m_RigidBody.isKinematic = false;
-                    Walk();
                 }
             }
         }
 
-        public void Climb(float height)
+        public void Climb()
         {
-            m_StartClimb = true;
-            m_ClimbHeight = height;
+            Walk();
 
+            m_StartClimb = true;
             m_AfterJump = false;
         }
 
@@ -138,6 +133,9 @@ namespace GameScripts
         {
             m_Side *= -1;
             m_CurVelocity.x *= -1;
+
+            m_WallCheckers.ForEach(o => o.Direction *= -1);
+            m_Transform.localScale = new Vector3(-m_Transform.localScale.x, m_Transform.localScale.y, m_Transform.localScale.z);
 
             m_AfterJump = false;
         }

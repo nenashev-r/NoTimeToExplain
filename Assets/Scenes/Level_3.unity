@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1514,6 +1514,7 @@ MonoBehaviour:
   - {fileID: 2049150319}
   - {fileID: 2025200483}
   - {fileID: 1380877128}
+  m_MoveToLast: 0
 --- !u!1001 &1034161156
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1772,7 +1773,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.09009434, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -1783,7 +1784,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.1801881, y: 1}
   m_EdgeRadius: 0
 --- !u!114 &1057856918
 MonoBehaviour:
@@ -1806,7 +1807,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1057856916}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.56, y: -2.5, z: 0}
+  m_LocalPosition: {x: 9.45, y: -2.5, z: 0}
   m_LocalScale: {x: 20.56, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1605834532}

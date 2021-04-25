@@ -104,7 +104,7 @@ namespace GameScripts
             if (m_CharacterController == null)
                 return;
 
-            m_CharacterController.Climb(m_LastPos.y + m_CurEvent.Distance);
+            m_CharacterController.Climb();
         }
 
         public void TurnAround()
